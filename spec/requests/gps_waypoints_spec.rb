@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'GpsWaypoints', type: :request do
@@ -16,16 +18,16 @@ RSpec.describe 'GpsWaypoints', type: :request do
     context 'when all params are correct' do
       before(:all) do
         @correct_params = @gps_waypoint_params.merge(vehicle_identifier: 'LA-3421')
+        post '/api/v1/gps', params: @correct_params, headers: headers
       end
 
       it 'returns status created' do
-        post '/api/v1/gps', params: @correct_params, headers: headers
-        expect(response).to have_http_status(:created)
+        expect(response).to have_http_status(:ok)
       end
 
-      it 'creates a GPS Waypoint record' do
-        expect { post '/api/v1/gps', params: @correct_params, headers: headers }
-          .to change { GpsWaypoint.count }.by(1)
+      it 'schedules a GPS Waypoint creation' do
+        Sidekiq::Testing.fake!
+        expect(GpsWaypointJob.jobs.size).to eq(1)
       end
     end
 

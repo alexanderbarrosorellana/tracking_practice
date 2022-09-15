@@ -83,6 +83,7 @@ GEM
       xpath (~> 3.2)
     childprocess (4.1.0)
     concurrent-ruby (1.1.10)
+    connection_pool (2.2.5)
     crass (1.0.6)
     database_cleaner-active_record (2.0.1)
       activerecord (>= 5.a)
@@ -96,6 +97,9 @@ GEM
     erubi (1.11.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     faker (2.23.0)
       i18n (>= 1.8.11, < 2)
     globalid (1.0.0)
@@ -173,6 +177,7 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
+    redis (4.8.0)
     regexp_parser (2.5.0)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -202,6 +207,10 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
+    sidekiq (6.5.6)
+      connection_pool (>= 2.2.5)
+      rack (~> 2.0)
+      redis (>= 4.5.0, < 5)
     sprockets (4.1.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -246,7 +255,7 @@ DEPENDENCIES
   capybara
   database_cleaner-active_record
   debug
-  factory_bot
+  factory_bot_rails
   faker
   importmap-rails
   jbuilder
@@ -255,6 +264,7 @@ DEPENDENCIES
   rspec-rails
   selenium-webdriver
   shoulda-matchers (~> 5.0)
+  sidekiq
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails

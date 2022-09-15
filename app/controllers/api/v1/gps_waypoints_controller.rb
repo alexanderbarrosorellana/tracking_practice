@@ -6,12 +6,11 @@ module Api
     class GpsWaypointsController < ApplicationController
       def create
         @vehicle = Vehicle.find_or_create_by!(identifier: params[:vehicle_identifier])
-        @waypoint = GpsWaypoint.new(gps_waypoint_params.merge(vehicle: @vehicle))
-        if @waypoint.save
-          render json: { gps_waypoint: @waypoint }, status: :created
-        else
-          render json: { message: @waypoint.errors }, status: 422
-        end
+        @gps_waypoint_attributes = gps_waypoint_params.merge(vehicle_id: @vehicle.id).to_h
+
+        GpsWaypointJob.perform_async(@gps_waypoint_attributes)
+
+        render json: { gps_waypoint: 'GPS Waypoint sent' }, status: :ok
       rescue StandardError => e
         render json: { message: e.message }, status: 500
       end

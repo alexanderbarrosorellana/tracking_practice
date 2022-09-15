@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   namespace :api do
@@ -5,4 +7,6 @@ Rails.application.routes.draw do
       post :gps, action: :create, controller: 'gps_waypoints'
     end
   end
+
+  mount Sidekiq::Web => '/sidekiq'
 end
