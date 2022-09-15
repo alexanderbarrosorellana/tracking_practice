@@ -1,0 +1,28 @@
+<script defer
+    src="https://maps.googleapis.com/maps/api/js?key=<%=Rails.application.credentials.google_api_key%>&callback=initMap">
+</script>
+
+<script>
+  function initMap() {                                                
+    const map = new google.maps.Map(document.getElementById('map'), {
+              zoom: 1,
+              center: {lat: 42.402900, lng: -122.885240}
+    });
+
+  <% @locations.filter{|location| location.latitude && location.latitude}.each do |location| %>
+          marker = new google.maps.Marker({
+              map: map,
+              draggable: false,
+              animation: google.maps.Animation.DROP,
+              position: {lat: <%= location.latitude%>, lng: <%=location.longitude%>}, title: "Vehicle id: <%=location.vehicle_id%>",
+          });
+  <% end %>
+
+  }
+</script>
+
+
+<div class="map-container">
+  <h1>Vehicles most recent location</h1>
+  <div id="map" style="height:500px; width:100%;"></div>
+</div>
