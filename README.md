@@ -42,6 +42,8 @@ And now you are ready to make the first POST request with the following format:
 }
 ```
 
+You can see the locations at "\show" endpoint in your browser
+
 ### Seed
 
 If you want to start with random data, you can run the following command: 
