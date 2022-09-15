@@ -1,25 +1,31 @@
 <script defer
     src="https://maps.googleapis.com/maps/api/js?key=<%=Rails.application.credentials.google_api_key%>&callback=initMap">
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <script>
   function initMap() {                                                
     const map = new google.maps.Map(document.getElementById('map'), {
               zoom: 1,
-              center: {lat: 42.402900, lng: -122.885240}
+              center: {lat: 0, lng: 0}
     });
 
-  <% @locations.filter{|location| location.latitude && location.latitude}.each do |location| %>
+  <% @locations.filter{|location| location.latitude && location.latitude}.each do |location|%>
           marker = new google.maps.Marker({
               map: map,
               draggable: false,
               animation: google.maps.Animation.DROP,
-              position: {lat: <%= location.latitude%>, lng: <%=location.longitude%>}, title: "Vehicle id: <%=location.vehicle_id%>",
+              position: {lat: <%= location.latitude%>, lng: <%=location.longitude%>}, title: "Vehicle: <%=location.vehicle.identifier%>",
           });
   <% end %>
 
   }
+
+  setInterval(function() {
+    window.location.reload()
+  }, 15000);
 </script>
+
 
 
 <div class="map-container">

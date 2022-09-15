@@ -1,24 +1,60 @@
-# README
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Tests](#test)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## General info
+This project is simple rails app that accepts gps waypoints throug API request and show the vehicles most recent location on google map.
+	
+## Technologies
+Project is created with:
+* Ruby: ruby 3.0.0p0
+* Ruby on Rails: 7.0.4
+* Redis server version: Redis server v=5.0.7 sha=00000000:0 malloc=jemalloc-5.2.1 bits=64 build=66bd629f924ac924
+	
+## Setup
+To run this project, open your terminal and go to project root and run the
+following commands:
 
-Things you may want to cover:
+```sh
+bundle install
+rails db:create
+rails db:migrate
+rails server
+```
 
-* Ruby version
+Open other terminal and make sure your redis server is running to run 
+sidekiq with the following command:
 
-* System dependencies
+```sh
+sidekiq
+```
 
-* Configuration
+And now you are ready to make the first POST request with the following format:
 
-* Database creation
+```
+{
+  "latitude": 43.978508518956005,
+  "longitude": 15.383371119693324,
+  "sent_at": "2022-09-15 13:53:00",
+  "vehicle_identifier": "RVZ-076"
+}
+```
 
-* Database initialization
+### Seed
 
-* How to run the test suite
+If you want to start with random data, you can run the following command: 
 
-* Services (job queues, cache servers, search engines, etc.)
+```sh
+rails db:seed
+```
 
-* Deployment instructions
+## Tests
 
-* ...
+The project is currently using Rspec to run tests, and you can run them with
+the following command:
+
+```sh
+bundle exec rspec
+```
